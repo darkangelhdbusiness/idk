@@ -1,0 +1,760 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SecPrep — Get Hired in Cybersecurity</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;700&family=Lora:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --ink:#06090c;
+  --ink2:#0d1219;
+  --surface:#111820;
+  --surface2:#18212c;
+  --surface3:#202c3a;
+  --green:#00e87a;
+  --green2:#00b85f;
+  --green-bg:rgba(0,232,122,0.06);
+  --green-border:rgba(0,232,122,0.16);
+  --gold:#f5c842;
+  --gold-bg:rgba(245,200,66,0.06);
+  --gold-border:rgba(245,200,66,0.2);
+  --blue:#4da6ff;
+  --text:#d8e8d8;
+  --muted:#4a6050;
+  --muted2:#7a9a80;
+  --syne:'Syne',sans-serif;
+  --mono:'IBM Plex Mono',monospace;
+  --serif:'Lora',serif;
+}
+html{scroll-behavior:smooth}
+body{background:var(--ink);color:var(--text);font-family:var(--syne);font-size:15px;line-height:1.65;overflow-x:hidden}
+::-webkit-scrollbar{width:3px}
+::-webkit-scrollbar-track{background:var(--ink)}
+::-webkit-scrollbar-thumb{background:var(--muted);border-radius:2px}
+
+/* ── NOISE OVERLAY ── */
+body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");pointer-events:none;z-index:1000;opacity:0.4}
+
+/* ── NAV ── */
+nav{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:1.1rem 3rem;
+  position:sticky;top:0;z-index:200;
+  background:rgba(6,9,12,0.88);
+  backdrop-filter:blur(20px);
+  border-bottom:1px solid rgba(255,255,255,0.04);
+}
+.logo{font-family:var(--syne);font-weight:800;font-size:17px;color:var(--green);letter-spacing:-0.5px;cursor:pointer;text-decoration:none}
+.logo span{color:rgba(255,255,255,0.2)}
+nav ul{display:flex;gap:2.5rem;list-style:none;align-items:center}
+nav a{text-decoration:none;color:var(--muted2);font-size:13px;font-weight:500;transition:color .2s}
+nav a:hover{color:var(--text)}
+.nav-pill{background:var(--green);color:var(--ink)!important;padding:.45rem 1.25rem;border-radius:100px;font-weight:700!important;font-size:12px!important;transition:transform .15s,opacity .15s!important}
+.nav-pill:hover{transform:translateY(-1px);opacity:.9}
+
+/* ── HERO ── */
+.hero{
+  min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  padding:6rem 2rem 4rem;text-align:center;position:relative;overflow:hidden;
+}
+/* animated gradient orbs */
+.orb{position:absolute;border-radius:50%;filter:blur(80px);pointer-events:none;animation:drift 12s ease-in-out infinite}
+.orb1{width:500px;height:500px;background:radial-gradient(circle,rgba(0,232,122,0.12),transparent 70%);top:-100px;left:-100px;animation-delay:0s}
+.orb2{width:400px;height:400px;background:radial-gradient(circle,rgba(77,166,255,0.08),transparent 70%);bottom:-80px;right:-80px;animation-delay:-4s}
+.orb3{width:300px;height:300px;background:radial-gradient(circle,rgba(245,200,66,0.06),transparent 70%);top:40%;left:60%;animation-delay:-8s}
+@keyframes drift{0%,100%{transform:translate(0,0)}33%{transform:translate(30px,-20px)}66%{transform:translate(-20px,30px)}}
+
+/* grid */
+.hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(0,232,122,0.02) 1px,transparent 1px),linear-gradient(90deg,rgba(0,232,122,0.02) 1px,transparent 1px);background-size:64px 64px}
+.hero-grid::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 90% 80% at 50% 40%,transparent 20%,var(--ink) 90%)}
+
+.hero-inner{position:relative;z-index:2;max-width:900px}
+
+.eyebrow{
+  display:inline-flex;align-items:center;gap:.6rem;
+  font-family:var(--mono);font-size:10px;color:var(--green);
+  background:var(--green-bg);border:1px solid var(--green-border);
+  padding:.35rem 1rem;border-radius:100px;letter-spacing:1.5px;
+  margin-bottom:2.5rem;text-transform:uppercase;
+  animation:up .6s ease both;
+}
+.pulse{width:6px;height:6px;border-radius:50%;background:var(--green);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.3;transform:scale(.7)}}
+
+.hero h1{
+  font-family:var(--syne);font-weight:800;
+  font-size:clamp(3rem,8vw,6rem);
+  line-height:.95;letter-spacing:-3px;
+  margin-bottom:1.5rem;
+  animation:up .6s .08s ease both;
+}
+.h1-line1{display:block;color:var(--text)}
+.h1-line2{display:block;color:var(--green);font-style:italic;font-family:var(--serif)}
+.h1-line3{display:block;color:rgba(255,255,255,.18)}
+
+.hero-sub{
+  font-size:1.05rem;color:var(--muted2);max-width:560px;margin:0 auto 2.75rem;
+  font-weight:400;line-height:1.8;
+  animation:up .6s .16s ease both;
+}
+.hero-sub strong{color:var(--text);font-weight:600}
+
+.hero-btns{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;animation:up .6s .24s ease both}
+.btn{display:inline-flex;align-items:center;gap:.5rem;font-family:var(--syne);font-weight:700;cursor:pointer;border:none;transition:all .2s;text-decoration:none;white-space:nowrap}
+.btn-primary{background:var(--green);color:var(--ink);padding:.9rem 2.2rem;border-radius:100px;font-size:14px}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 12px 40px rgba(0,232,122,.25)}
+.btn-secondary{background:transparent;color:var(--muted2);padding:.9rem 2rem;border-radius:100px;border:1px solid rgba(255,255,255,.1);font-size:13px}
+.btn-secondary:hover{border-color:rgba(255,255,255,.25);color:var(--text)}
+
+.social-proof{
+  display:flex;align-items:center;gap:1.5rem;justify-content:center;
+  margin-top:3.5rem;animation:up .6s .32s ease both;
+}
+.avatars{display:flex}
+.avatar{width:32px;height:32px;border-radius:50%;background:var(--surface2);border:2px solid var(--ink);margin-left:-8px;first:margin-left:0;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:9px;color:var(--muted2)}
+.avatar:first-child{margin-left:0}
+.proof-text{font-size:12px;color:var(--muted2)}
+.proof-text strong{color:var(--green);font-weight:700}
+.stars{color:var(--gold);font-size:12px;letter-spacing:1px}
+
+@keyframes up{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
+
+/* ── MARQUEE ── */
+.marquee-wrap{padding:1.5rem 0;border-top:1px solid rgba(255,255,255,.04);border-bottom:1px solid rgba(255,255,255,.04);overflow:hidden;background:var(--ink2)}
+.marquee-track{display:flex;gap:3rem;animation:marquee 25s linear infinite;width:max-content}
+.marquee-item{font-family:var(--mono);font-size:11px;color:var(--muted);white-space:nowrap;display:flex;align-items:center;gap:.75rem}
+.marquee-item::before{content:'◆';color:var(--green);font-size:7px}
+@keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* ── SECTION ── */
+.section{padding:6rem 2rem}
+.section-alt{background:var(--ink2)}
+.wrap{max-width:1080px;margin:0 auto}
+.section-eyebrow{font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:2.5px;color:var(--green);margin-bottom:.75rem}
+h2{font-family:var(--syne);font-weight:800;font-size:clamp(2rem,4vw,3.2rem);letter-spacing:-1.5px;line-height:1.05;margin-bottom:.75rem}
+.section-sub{color:var(--muted2);font-size:.95rem;max-width:500px;margin-bottom:3.5rem;line-height:1.8}
+hr.sep{border:none;border-top:1px solid rgba(255,255,255,.05)}
+
+/* ── STATS BAR ── */
+.stats-bar{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.05);border-radius:12px;overflow:hidden;margin-bottom:5rem}
+.stat-cell{background:var(--surface);padding:2rem;text-align:center}
+.stat-big{font-family:var(--syne);font-weight:800;font-size:2.5rem;color:var(--green);letter-spacing:-1.5px;display:block;line-height:1}
+.stat-lbl{font-family:var(--mono);font-size:10px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;margin-top:.4rem;display:block}
+
+/* ── HOW IT WORKS ── */
+.how-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.5rem}
+.how-card{
+  background:var(--surface);border:1px solid rgba(255,255,255,.06);
+  border-radius:12px;padding:2rem;position:relative;
+  transition:border-color .25s,transform .25s;
+}
+.how-card:hover{border-color:var(--green-border);transform:translateY(-3px)}
+.how-num{
+  font-family:var(--mono);font-size:10px;color:var(--green);
+  background:var(--green-bg);border:1px solid var(--green-border);
+  padding:.2rem .6rem;border-radius:100px;display:inline-block;
+  margin-bottom:1.25rem;letter-spacing:1px;
+}
+.how-card h3{font-family:var(--syne);font-size:15px;font-weight:700;margin-bottom:.5rem;color:var(--text)}
+.how-card p{font-size:12px;color:var(--muted2);line-height:1.65}
+.connector{display:none}
+
+/* ── FEATURES ── */
+.feat-layout{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem}
+.feat-big{
+  background:var(--surface);border:1px solid rgba(255,255,255,.06);
+  border-radius:12px;padding:2.5rem;grid-row:span 2;
+  transition:border-color .25s;position:relative;overflow:hidden;
+}
+.feat-big::before{
+  content:'';position:absolute;top:-60px;right:-60px;
+  width:200px;height:200px;
+  border-radius:50%;
+  background:radial-gradient(circle,var(--green-bg),transparent 70%);
+  pointer-events:none;
+}
+.feat-big:hover{border-color:var(--green-border)}
+.feat-small{
+  background:var(--surface);border:1px solid rgba(255,255,255,.06);
+  border-radius:12px;padding:2rem;
+  transition:border-color .25s,transform .25s;
+}
+.feat-small:hover{border-color:var(--green-border);transform:translateY(-2px)}
+.feat-tag{
+  font-family:var(--mono);font-size:9px;color:var(--green);
+  background:var(--green-bg);border:1px solid var(--green-border);
+  padding:.2rem .6rem;border-radius:100px;display:inline-block;
+  margin-bottom:1.25rem;letter-spacing:1px;text-transform:uppercase;
+}
+.feat-big h3{font-family:var(--syne);font-size:20px;font-weight:700;margin-bottom:.75rem;color:var(--text);letter-spacing:-.5px}
+.feat-small h3{font-family:var(--syne);font-size:15px;font-weight:700;margin-bottom:.5rem;color:var(--text)}
+.feat-big p,.feat-small p{font-size:13px;color:var(--muted2);line-height:1.7}
+.feat-mockup{
+  margin-top:1.75rem;background:var(--ink);border:1px solid rgba(255,255,255,.07);
+  border-radius:8px;padding:1.25rem;font-family:var(--mono);font-size:11px;
+}
+.fm-line{margin-bottom:.35rem;line-height:1.6}
+.fm-prompt{color:var(--green)}
+.fm-q{color:#7eb8ff}
+.fm-a{color:var(--text)}
+.fm-tag{display:inline-block;font-size:9px;padding:.15rem .5rem;border-radius:100px;margin-left:4px;vertical-align:middle}
+.fmt-g{background:var(--green-bg);color:var(--green2);border:1px solid var(--green-border)}
+.fmt-b{background:rgba(77,166,255,.08);color:var(--blue);border:1px solid rgba(77,166,255,.18)}
+.fm-cursor{display:inline-block;width:6px;height:11px;background:var(--green);vertical-align:text-bottom;animation:blink 1s step-end infinite}
+@keyframes blink{50%{opacity:0}}
+
+/* ── TOPICS ── */
+.topics-cloud{display:flex;flex-wrap:wrap;gap:.5rem}
+.topic{
+  font-family:var(--mono);font-size:10px;
+  padding:.4rem .9rem;border-radius:100px;
+  border:1px solid rgba(255,255,255,.07);
+  color:var(--muted2);background:var(--surface);
+  cursor:default;transition:all .2s;
+}
+.topic:hover,.topic.hot{
+  border-color:var(--green-border);
+  color:var(--green);background:var(--green-bg);
+}
+
+/* ── TESTIMONIALS ── */
+.testi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
+.testi{
+  background:var(--surface);border:1px solid rgba(255,255,255,.06);
+  border-radius:12px;padding:1.875rem;
+  transition:border-color .25s,transform .25s;
+}
+.testi:hover{border-color:rgba(255,255,255,.12);transform:translateY(-3px)}
+.testi-stars{color:var(--gold);font-size:13px;letter-spacing:2px;margin-bottom:1rem}
+.testi-text{font-size:13px;color:var(--muted2);line-height:1.75;margin-bottom:1.25rem;font-family:var(--serif);font-style:italic}
+.testi-author{display:flex;align-items:center;gap:.75rem}
+.testi-av{
+  width:36px;height:36px;border-radius:50%;
+  background:var(--surface2);border:1px solid var(--green-border);
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--mono);font-size:10px;color:var(--green);flex-shrink:0;
+}
+.testi-name{font-family:var(--syne);font-size:13px;font-weight:700;color:var(--text)}
+.testi-role{font-family:var(--mono);font-size:10px;color:var(--muted)}
+
+/* ── PRICING ── */
+.pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;align-items:start}
+.price-card{
+  background:var(--surface);border:1px solid rgba(255,255,255,.07);
+  border-radius:16px;padding:2.25rem;display:flex;flex-direction:column;
+  transition:border-color .25s,transform .25s;
+}
+.price-card:hover{transform:translateY(-3px)}
+.price-card.pro{
+  border-color:var(--green-border);
+  background:linear-gradient(160deg,rgba(0,232,122,.05),transparent 50%);
+}
+.price-card.pro:hover{box-shadow:0 20px 60px rgba(0,232,122,.08)}
+.price-card.elite{
+  border-color:var(--gold-border);
+  background:linear-gradient(160deg,rgba(245,200,66,.05),transparent 50%);
+}
+.price-card.elite:hover{box-shadow:0 20px 60px rgba(245,200,66,.08)}
+.p-chip{
+  font-family:var(--mono);font-size:9px;letter-spacing:2px;text-transform:uppercase;
+  padding:.25rem .7rem;border-radius:100px;display:inline-block;margin-bottom:.75rem;
+  align-self:flex-start;
+}
+.chip-green{background:var(--green-bg);color:var(--green2);border:1px solid var(--green-border)}
+.chip-gold{background:var(--gold-bg);color:var(--gold);border:1px solid var(--gold-border)}
+.p-name{font-family:var(--mono);font-size:10px;color:var(--muted2);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:.4rem}
+.p-price{font-family:var(--syne);font-weight:800;font-size:3.2rem;color:var(--text);line-height:1;letter-spacing:-2px;margin-bottom:.25rem}
+.p-price sup{font-size:1.3rem;vertical-align:super;letter-spacing:0}
+.p-price sub{font-size:.9rem;color:var(--muted);font-weight:400;letter-spacing:0}
+.p-desc{font-size:12px;color:var(--muted2);margin-bottom:1.75rem;line-height:1.6}
+.p-features{list-style:none;margin-bottom:2rem;flex:1}
+.p-features li{
+  font-size:12px;color:var(--muted2);padding:.45rem 0;
+  border-bottom:1px solid rgba(255,255,255,.04);
+  display:flex;gap:.6rem;align-items:flex-start;line-height:1.5;
+}
+.p-features li .ck{font-family:var(--mono);flex-shrink:0;margin-top:1px}
+.ck-g{color:var(--green)}.ck-gold{color:var(--gold)}.ck-off{color:var(--muted);opacity:.4}
+.p-features li.off{opacity:.35}
+.p-cta{
+  display:block;text-align:center;border-radius:100px;
+  padding:.8rem;font-family:var(--syne);font-size:13px;font-weight:700;
+  cursor:pointer;transition:all .2s;text-decoration:none;
+}
+.cta-outline{border:1px solid rgba(255,255,255,.12);color:var(--muted2);background:transparent}
+.cta-outline:hover{border-color:rgba(255,255,255,.3);color:var(--text)}
+.cta-green{background:var(--green);color:var(--ink);border:none}
+.cta-green:hover{transform:translateY(-1px);box-shadow:0 10px 30px rgba(0,232,122,.25)}
+.cta-gold{background:var(--gold);color:var(--ink);border:none}
+.cta-gold:hover{transform:translateY(-1px);box-shadow:0 10px 30px rgba(245,200,66,.25)}
+
+/* elite badge feature */
+.elite-feature{
+  background:var(--gold-bg);border:1px solid var(--gold-border);
+  border-radius:8px;padding:.875rem 1rem;margin-top:1rem;
+}
+.ef-label{font-family:var(--mono);font-size:9px;color:var(--gold);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:.3rem}
+.ef-text{font-size:11px;color:var(--muted2);line-height:1.5}
+
+/* ── FAQ ── */
+.faq-list{display:grid;gap:.75rem;max-width:680px}
+.faq{
+  background:var(--surface);border:1px solid rgba(255,255,255,.06);
+  border-radius:10px;overflow:hidden;
+}
+.faq-q{
+  padding:1.25rem 1.5rem;font-family:var(--syne);font-size:14px;font-weight:600;
+  cursor:pointer;display:flex;justify-content:space-between;align-items:center;
+  color:var(--text);transition:color .2s;user-select:none;
+}
+.faq-q:hover{color:var(--green)}
+.faq-icon{font-family:var(--mono);font-size:16px;color:var(--muted);transition:transform .25s}
+.faq.open .faq-icon{transform:rotate(45deg);color:var(--green)}
+.faq-a{
+  max-height:0;overflow:hidden;transition:max-height .35s ease,padding .35s ease;
+  padding:0 1.5rem;font-size:13px;color:var(--muted2);line-height:1.7;
+}
+.faq.open .faq-a{max-height:200px;padding:0 1.5rem 1.25rem}
+
+/* ── CTA BAND ── */
+.cta-band{
+  padding:8rem 2rem;text-align:center;position:relative;overflow:hidden;
+}
+.cta-band::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse 60% 70% at 50% 50%,rgba(0,232,122,.07),transparent 70%);
+  pointer-events:none;
+}
+.cta-inner{position:relative;z-index:1}
+.cta-band h2{font-size:clamp(2.5rem,6vw,4.5rem);letter-spacing:-2px;margin-bottom:.875rem}
+.cta-band p{color:var(--muted2);margin-bottom:2.5rem;font-size:1rem;max-width:460px;margin-left:auto;margin-right:auto}
+
+/* ── FOOTER ── */
+footer{
+  border-top:1px solid rgba(255,255,255,.05);
+  padding:2.5rem 3rem;
+  display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1.5rem;
+}
+.footer-logo{font-family:var(--syne);font-weight:800;font-size:15px;color:var(--green)}
+.footer-logo span{color:rgba(255,255,255,.2)}
+footer nav ul{display:flex;gap:2rem;list-style:none}
+footer nav a{font-family:var(--mono);font-size:11px;color:var(--muted);text-decoration:none;transition:color .2s}
+footer nav a:hover{color:var(--text)}
+footer p{font-family:var(--mono);font-size:10px;color:var(--muted)}
+
+/* ── RESPONSIVE ── */
+@media(max-width:900px){
+  nav{padding:1rem 1.5rem}
+  nav ul li:not(:last-child):not(:nth-last-child(2)){display:none}
+  .how-grid{grid-template-columns:1fr 1fr}
+  .feat-layout{grid-template-columns:1fr}
+  .feat-big{grid-row:span 1}
+  .testi-grid{grid-template-columns:1fr}
+  .pricing-grid{grid-template-columns:1fr}
+  .stats-bar{grid-template-columns:1fr 1fr}
+  .section{padding:4rem 1.5rem}
+  footer{flex-direction:column;align-items:flex-start;padding:2rem 1.5rem}
+}
+@media(max-width:580px){
+  .how-grid{grid-template-columns:1fr}
+  .stats-bar{grid-template-columns:1fr 1fr}
+  .hero h1{letter-spacing:-2px}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="logo">Sec<span>/</span>Prep</a>
+  <ul>
+    <li><a href="#how">How it works</a></li>
+    <li><a href="#features">Features</a></li>
+    <li><a href="#pricing">Pricing</a></li>
+    <li><a href="#pricing" class="nav-pill">Start free →</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="orb orb1"></div>
+  <div class="orb orb2"></div>
+  <div class="orb orb3"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-inner">
+    <div class="eyebrow"><span class="pulse"></span> The #1 AI cybersecurity interview coach</div>
+    <h1>
+      <span class="h1-line1">Land your dream</span>
+      <span class="h1-line2">security role.</span>
+      <span class="h1-line3">Finally.</span>
+    </h1>
+    <p class="hero-sub">
+      Real AI mock interviews, instant scoring, and personalized coaching — plus <strong>done-for-you job applications</strong> on our Elite plan. Built exclusively for cybersecurity professionals.
+    </p>
+    <div class="hero-btns">
+      <a href="#pricing" class="btn btn-primary">Start free today →</a>
+      <a href="#how" class="btn btn-secondary">See how it works</a>
+    </div>
+    <div class="social-proof">
+      <div class="avatars">
+        <div class="avatar">JR</div>
+        <div class="avatar">ML</div>
+        <div class="avatar">AK</div>
+        <div class="avatar">SP</div>
+        <div class="avatar">+</div>
+      </div>
+      <div>
+        <div class="stars">★★★★★</div>
+        <div class="proof-text">Trusted by <strong>4,200+</strong> security professionals</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-wrap">
+  <div class="marquee-track">
+    <span class="marquee-item">SOC Analyst</span>
+    <span class="marquee-item">Penetration Tester</span>
+    <span class="marquee-item">AppSec Engineer</span>
+    <span class="marquee-item">Cloud Security</span>
+    <span class="marquee-item">Incident Response</span>
+    <span class="marquee-item">GRC Analyst</span>
+    <span class="marquee-item">Threat Intelligence</span>
+    <span class="marquee-item">Malware Analyst</span>
+    <span class="marquee-item">CISO Track</span>
+    <span class="marquee-item">Red Team</span>
+    <span class="marquee-item">Blue Team</span>
+    <span class="marquee-item">DevSecOps</span>
+    <!-- duplicate for infinite scroll -->
+    <span class="marquee-item">SOC Analyst</span>
+    <span class="marquee-item">Penetration Tester</span>
+    <span class="marquee-item">AppSec Engineer</span>
+    <span class="marquee-item">Cloud Security</span>
+    <span class="marquee-item">Incident Response</span>
+    <span class="marquee-item">GRC Analyst</span>
+    <span class="marquee-item">Threat Intelligence</span>
+    <span class="marquee-item">Malware Analyst</span>
+    <span class="marquee-item">CISO Track</span>
+    <span class="marquee-item">Red Team</span>
+    <span class="marquee-item">Blue Team</span>
+    <span class="marquee-item">DevSecOps</span>
+  </div>
+</div>
+
+<!-- STATS -->
+<section class="section">
+  <div class="wrap">
+    <div class="stats-bar">
+      <div class="stat-cell"><span class="stat-big">600+</span><span class="stat-lbl">Questions</span></div>
+      <div class="stat-cell"><span class="stat-big">18</span><span class="stat-lbl">Domains</span></div>
+      <div class="stat-cell"><span class="stat-big">94%</span><span class="stat-lbl">Pass rate</span></div>
+      <div class="stat-cell"><span class="stat-big">4.8★</span><span class="stat-lbl">User rating</span></div>
+    </div>
+
+    <!-- HOW IT WORKS -->
+    <div class="section-eyebrow" id="how">// how it works</div>
+    <h2>Four steps to<br><span style="color:var(--green)">getting hired.</span></h2>
+    <p class="section-sub">From first practice session to signed offer letter — SecPrep covers the whole journey.</p>
+    <div class="how-grid">
+      <div class="how-card">
+        <div class="how-num">01</div>
+        <h3>Pick your role & level</h3>
+        <p>12 cybersecurity roles. Entry to senior. The AI tailors every question to your exact target position.</p>
+      </div>
+      <div class="how-card">
+        <div class="how-num">02</div>
+        <h3>Run AI mock interviews</h3>
+        <p>Real questions from real interviews at top firms. Type your answers and get scored in real time.</p>
+      </div>
+      <div class="how-card">
+        <div class="how-num">03</div>
+        <h3>Get coached & scored</h3>
+        <p>Instant feedback after every answer — what landed, what was thin, and a model answer to study.</p>
+      </div>
+      <div class="how-card">
+        <div class="how-num">04</div>
+        <h3>Apply &amp; get hired</h3>
+        <p>Elite members get AI-generated tailored applications — resume bullets, cover letters, job matching.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="sep">
+
+<!-- FEATURES -->
+<section class="section section-alt" id="features">
+  <div class="wrap">
+    <div class="section-eyebrow">// features</div>
+    <h2>Not a generic tool<br><span style="color:var(--green)">with a security skin.</span></h2>
+    <p class="section-sub">Built from the ground up for cybersecurity — every question, every domain, every feedback point.</p>
+
+    <div class="feat-layout">
+      <div class="feat-big">
+        <span class="feat-tag">live ai coach</span>
+        <h3>Real-time feedback that actually teaches you.</h3>
+        <p>Every answer is scored 0–100 across technical accuracy, depth, clarity, and real-world application. The AI coach tells you exactly what a senior engineer would say after your answer — not generic praise.</p>
+        <div class="feat-mockup">
+          <div class="fm-line"><span class="fm-prompt">Q&gt; </span><span class="fm-q">How does Kerberoasting work and how would you defend against it?</span></div>
+          <div class="fm-line" style="color:var(--muted);font-size:10px;font-style:italic">// analyzing...</div>
+          <div class="fm-line"><span class="fm-prompt">you&gt; </span><span class="fm-a">Kerberoasting targets service accounts by requesting TGS tickets for any service with an SPN — since tickets are encrypted with the service account's NTLM hash, they can be cracked offline...</span></div>
+          <div class="fm-line" style="margin-top:.5rem">
+            <span style="color:var(--muted2);font-size:10px">score: 87/100</span>
+            <span class="fm-tag fmt-g">strong depth</span><span class="fm-tag fmt-b">add: detection</span>
+          </div>
+          <div class="fm-line"><span class="fm-prompt">coach&gt; </span><span class="fm-cursor"></span></div>
+        </div>
+      </div>
+      <div class="feat-small">
+        <span class="feat-tag">adaptive</span>
+        <h3>Gets harder as you improve.</h3>
+        <p>Questions calibrate to your performance. Never waste time on stuff you already know.</p>
+      </div>
+      <div class="feat-small">
+        <span class="feat-tag">company packs</span>
+        <h3>Cloudflare. CrowdStrike. Google.</h3>
+        <p>Question sets modeled on real interviews at top security employers. Know exactly what's coming.</p>
+      </div>
+      <div class="feat-small">
+        <span class="feat-tag">model answers</span>
+        <h3>See the A+ response every time.</h3>
+        <p>After each question, review what a senior engineer would have said — including the nuances.</p>
+      </div>
+      <div class="feat-small">
+        <span class="feat-tag">analytics</span>
+        <h3>Know exactly where your gaps are.</h3>
+        <p>Domain-by-domain readiness score, improvement curve, and targeted next steps after every session.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="sep">
+
+<!-- TOPICS -->
+<section class="section">
+  <div class="wrap">
+    <div class="section-eyebrow">// coverage</div>
+    <h2>Every domain.<br><span style="color:var(--green)">Every question type.</span></h2>
+    <p class="section-sub">600+ questions spanning technical deep-dives, scenario-based challenges, and behavioral interviews.</p>
+    <div class="topics-cloud">
+      <span class="topic hot">Network Security</span>
+      <span class="topic hot">Cryptography</span>
+      <span class="topic hot">Web App Security</span>
+      <span class="topic">OWASP Top 10</span>
+      <span class="topic hot">Cloud Security (AWS/Azure/GCP)</span>
+      <span class="topic">Threat Modeling</span>
+      <span class="topic">Incident Response</span>
+      <span class="topic">SIEM & Log Analysis</span>
+      <span class="topic hot">Penetration Testing</span>
+      <span class="topic">Malware Analysis</span>
+      <span class="topic">Zero Trust Architecture</span>
+      <span class="topic">Identity & Access Management</span>
+      <span class="topic hot">CTF-Style Challenges</span>
+      <span class="topic">GRC & Compliance</span>
+      <span class="topic">Reverse Engineering</span>
+      <span class="topic">Secure SDLC</span>
+      <span class="topic">SOC Operations</span>
+      <span class="topic hot">Behavioral / STAR</span>
+      <span class="topic">Memory Forensics</span>
+      <span class="topic">Active Directory</span>
+      <span class="topic">Container Security</span>
+      <span class="topic">DevSecOps</span>
+    </div>
+  </div>
+</section>
+
+<hr class="sep">
+
+<!-- TESTIMONIALS -->
+<section class="section section-alt">
+  <div class="wrap">
+    <div class="section-eyebrow">// testimonials</div>
+    <h2>Real people.<br><span style="color:var(--green)">Real offers.</span></h2>
+    <p class="section-sub" style="margin-bottom:2.5rem">Don't take our word for it.</p>
+    <div class="testi-grid">
+      <div class="testi">
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-text">The AI coach caught gaps in my answers I didn't even know I had. Three weeks after signing up I was in an offer negotiation with a Fortune 500. Nothing else on the market is this specific to security.</p>
+        <div class="testi-author">
+          <div class="testi-av">JR</div>
+          <div>
+            <div class="testi-name">James R.</div>
+            <div class="testi-role">SOC Analyst // hired @ Deloitte</div>
+          </div>
+        </div>
+      </div>
+      <div class="testi">
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-text">I'd failed five technical screens in a row. The company-specific packs are insane — questions were nearly identical to what I actually got asked at CrowdStrike. Passed first try.</p>
+        <div class="testi-author">
+          <div class="testi-av">ML</div>
+          <div>
+            <div class="testi-name">Maya L.</div>
+            <div class="testi-role">Threat Intel // hired @ CrowdStrike</div>
+          </div>
+        </div>
+      </div>
+      <div class="testi">
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-text">Used the Elite plan — the tailored cover letters and job matching saved me 10 hours a week on applications. Went from zero interviews to four offers in six weeks. Wild ROI.</p>
+        <div class="testi-author">
+          <div class="testi-av">AK</div>
+          <div>
+            <div class="testi-name">Alex K.</div>
+            <div class="testi-role">AppSec Engineer // hired @ Google</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="sep">
+
+<!-- PRICING -->
+<section class="section" id="pricing">
+  <div class="wrap">
+    <div class="section-eyebrow">// pricing</div>
+    <h2>Start free.<br><span style="color:var(--green)">Scale when you're ready.</span></h2>
+    <p class="section-sub">Cancel any time. Cheaper than every major competitor. 7-day free trial on paid plans.</p>
+
+    <div class="pricing-grid">
+
+      <!-- FREE -->
+      <div class="price-card">
+        <div class="p-name">Free</div>
+        <div class="p-price"><sup>$</sup>0</div>
+        <p class="p-desc">Get started — no credit card required.</p>
+        <ul class="p-features">
+          <li><span class="ck ck-g">//</span> 20 practice questions / month</li>
+          <li><span class="ck ck-g">//</span> 3 mock interview sessions</li>
+          <li><span class="ck ck-g">//</span> Basic AI feedback</li>
+          <li><span class="ck ck-g">//</span> Core topic coverage</li>
+          <li class="off"><span class="ck ck-off">--</span> Live AI coaching</li>
+          <li class="off"><span class="ck ck-off">--</span> Company-specific packs</li>
+          <li class="off"><span class="ck ck-off">--</span> Job matching & applications</li>
+        </ul>
+        <a href="#" class="p-cta cta-outline">Get started free</a>
+      </div>
+
+      <!-- PRO -->
+      <div class="price-card pro">
+        <div class="p-chip chip-green">Most popular</div>
+        <div class="p-name">Pro</div>
+        <div class="p-price"><sup>$</sup>19<sub>/mo</sub></div>
+        <p class="p-desc">For candidates actively interviewing — everything you need to pass.</p>
+        <ul class="p-features">
+          <li><span class="ck ck-g">//</span> Unlimited questions</li>
+          <li><span class="ck ck-g">//</span> Unlimited mock interviews</li>
+          <li><span class="ck ck-g">//</span> Live AI coaching + hints</li>
+          <li><span class="ck ck-g">//</span> Company-specific question packs</li>
+          <li><span class="ck ck-g">//</span> Full model answers</li>
+          <li><span class="ck ck-g">//</span> Session analytics dashboard</li>
+          <li class="off"><span class="ck ck-off">--</span> Job matching & applications</li>
+        </ul>
+        <a href="#" class="p-cta cta-green">Start 7-day free trial</a>
+      </div>
+
+      <!-- ELITE -->
+      <div class="price-card elite">
+        <div class="p-chip chip-gold">⚡ Done for you</div>
+        <div class="p-name">Elite</div>
+        <div class="p-price"><sup>$</sup>79<sub>/mo</sub></div>
+        <p class="p-desc">Interview prep <em>and</em> a full AI-powered job search engine working for you.</p>
+        <ul class="p-features">
+          <li><span class="ck ck-gold">//</span> Everything in Pro</li>
+          <li><span class="ck ck-gold">//</span> AI resume review & rewrite</li>
+          <li><span class="ck ck-gold">//</span> LinkedIn profile optimization</li>
+          <li><span class="ck ck-gold">//</span> Tailored cover letter generator</li>
+          <li><span class="ck ck-gold">//</span> Smart job matching engine</li>
+          <li><span class="ck ck-gold">//</span> Role-specific resume bullets</li>
+          <li><span class="ck ck-gold">//</span> Application tracker dashboard</li>
+        </ul>
+        <a href="#" class="p-cta cta-gold">Get Elite access</a>
+        <div class="elite-feature">
+          <div class="ef-label">⚡ Elite exclusive</div>
+          <div class="ef-text">Our AI scans thousands of cybersecurity job listings daily, matches them to your profile, and generates a fully tailored resume + cover letter for each one — ready to send in one click.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<hr class="sep">
+
+<!-- FAQ -->
+<section class="section section-alt">
+  <div class="wrap">
+    <div class="section-eyebrow">// faq</div>
+    <h2>Common <span style="color:var(--green)">questions.</span></h2>
+    <br>
+    <div class="faq-list">
+      <div class="faq">
+        <div class="faq-q" onclick="toggleFaq(this)">What makes SecPrep different from generic interview prep tools? <span class="faq-icon">+</span></div>
+        <div class="faq-a">SecPrep is built entirely for cybersecurity. Every question, every domain, every piece of feedback is written by security professionals. Generic tools give you surface-level questions and vague feedback — SecPrep gives you the actual depth hiring managers test for at CrowdStrike, Palo Alto, Google, and beyond.</div>
+      </div>
+      <div class="faq">
+        <div class="faq-q" onclick="toggleFaq(this)">How does the Elite job matching work? <span class="faq-icon">+</span></div>
+        <div class="faq-a">Our AI scans thousands of cybersecurity job postings daily across LinkedIn, company career pages, and niche security job boards. It matches listings to your role, experience, and target companies — then generates a tailored resume and cover letter for each one. You review, customize if needed, and apply.</div>
+      </div>
+      <div class="faq">
+        <div class="faq-q" onclick="toggleFaq(this)">Are the questions actually used in real interviews? <span class="faq-icon">+</span></div>
+        <div class="faq-a">Yes. Our question bank is built from hundreds of interviews reported by real candidates at top security companies. We also work with hiring managers to validate that questions reflect what's actually asked in technical screens at each level.</div>
+      </div>
+      <div class="faq">
+        <div class="faq-q" onclick="toggleFaq(this)">Can I cancel my subscription at any time? <span class="faq-icon">+</span></div>
+        <div class="faq-a">Absolutely — no contracts, no cancellation fees. Cancel directly from your account settings and you'll retain access until the end of your billing period.</div>
+      </div>
+      <div class="faq">
+        <div class="faq-q" onclick="toggleFaq(this)">Do you offer team or bootcamp plans? <span class="faq-icon">+</span></div>
+        <div class="faq-a">Yes — we have team plans starting at $49/mo for up to 10 seats, with an instructor dashboard and cohort analytics. Contact us at hello@secprep.io for custom pricing for larger groups or training programs.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA BAND -->
+<section class="cta-band">
+  <div class="cta-inner">
+    <div class="section-eyebrow" style="display:flex;justify-content:center;margin-bottom:.75rem">// get started</div>
+    <h2>Your next security<br><span style="color:var(--green)">role is waiting.</span></h2>
+    <p>Join 4,200+ security professionals who used SecPrep to land their next role. Start free, upgrade when you're ready.</p>
+    <a href="#pricing" class="btn btn-primary" style="font-size:15px;padding:1rem 2.5rem">Start practicing free →</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Sec<span>/</span>Prep</div>
+  <nav><ul>
+    <li><a href="#">Privacy</a></li>
+    <li><a href="#">Terms</a></li>
+    <li><a href="mailto:hello@secprep.io">Contact</a></li>
+    <li><a href="#">Twitter / X</a></li>
+    <li><a href="#">LinkedIn</a></li>
+  </ul></nav>
+  <p>© 2026 SecPrep. All rights reserved.</p>
+</footer>
+
+<script>
+function toggleFaq(el){
+  const faq=el.closest('.faq');
+  const isOpen=faq.classList.contains('open');
+  document.querySelectorAll('.faq.open').forEach(f=>f.classList.remove('open'));
+  if(!isOpen)faq.classList.add('open');
+}
+// Smooth scroll for anchor links
+document.querySelectorAll('a[href^="#"]').forEach(a=>{
+  a.addEventListener('click',e=>{
+    const target=document.querySelector(a.getAttribute('href'));
+    if(target){e.preventDefault();target.scrollIntoView({behavior:'smooth'})}
+  });
+});
+</script>
+</body>
+</html>
